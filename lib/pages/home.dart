@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/lists.dart'; // Assuming lists.dart holds icon and title lists
+import 'package:flutter_application_2/lists.dart';
+
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -24,17 +25,12 @@ class _HomepageState extends State<Homepage> {
         break;
       case 1: // Category
         // Implement navigation to CategoryView
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => CategoryView()),
-        // );
         break;
-      // Add navigation logic for cases 2 and 3 (assuming you have MyAppointmentsApp and Settingsview)
-      case 2:
+      case 2: // MyAppointmentsApp
         // Implement navigation to MyAppointmentsApp
         break;
-      case 3:
-        // Implement navigation to Settingsview
+      case 3: // SettingsView
+        // Implement navigation to SettingsView
         break;
       default:
         break;
@@ -54,11 +50,10 @@ class _HomepageState extends State<Homepage> {
             CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
                 "https://cdn.pixabay.com/photo/2017/06/13/12/54/profile-2398783_1280.png",
-      
               ),
               radius: 50,
             ),
-            SizedBox(width: 40),
+            SizedBox(width: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -66,7 +61,7 @@ class _HomepageState extends State<Homepage> {
                 Text("Let's learn to be smart"),
               ],
             ),
-            Spacer(), // Replace SizedBox(width: 1000,)
+            Spacer(),
             IconButton(
               icon: Icon(Icons.search),
               color: Colors.black,
@@ -80,28 +75,26 @@ class _HomepageState extends State<Homepage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(), // This seems like a placeholder, remove if unnecessary
             SizedBox(height: 30),
             SizedBox(
               height: 300,
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: iconlist.length, // Assuming iconlist holds the icon assets
+                itemCount: iconlist.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
                       // Implement navigation to the specific course page
-                      // based on the index (assuming you have logic for that)
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: PopularCourseCard(
-                        title: icontitlelist[index], // Assuming icontitlelist holds titles
+                        title: icontitlelist[index],
                         iconPath: iconlist[index],
-                        participantCount: 20, // Replace with actual data
-                        rating: 4.8, // Replace with actual data
-                        lessonCount: 30, // Replace with actual data
+                        participantCount: 20,
+                        rating: 4.8,
+       
                       ),
                     ),
                   );
@@ -121,9 +114,10 @@ class _HomepageState extends State<Homepage> {
         currentIndex: _selectedIndex,
         onTap: _onBottomNavBarItemTapped,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: " "),
-          BottomNavigationBarItem(icon: Icon(Icons.heat_pump_rounded), label: " "),
-          // Add more items as needed
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: "Category"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Appointments"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
         ],
       ),
     );
@@ -136,7 +130,7 @@ class PopularCourseCard extends StatelessWidget {
   final String iconPath;
   final int participantCount;
   final double rating;
-  final int lessonCount;
+
 
   const PopularCourseCard({
     Key? key,
@@ -144,13 +138,14 @@ class PopularCourseCard extends StatelessWidget {
     required this.iconPath,
     required this.participantCount,
     required this.rating,
-    required this.lessonCount,
+
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
+      width: 200, // Set a fixed width for consistency
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -166,10 +161,12 @@ class PopularCourseCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            iconPath,
-            width: 50,
-            height: 50,
+          CachedNetworkImage(
+            imageUrl: iconPath,
+            width: 100, // Adjust width as needed
+            height: 100, // Adjust height as needed
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           const SizedBox(height: 8.0),
           Text(
@@ -180,12 +177,13 @@ class PopularCourseCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4.0),
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  const Icon(Icons.people, size: 18.0),
-                  const SizedBox(width: 4.0),
+                 Icon(Icons.people, size: 18.0),
+             SizedBox(width: 4.0),
                   Text(
                     '$participantCount Participant',
                     style: const TextStyle(
@@ -195,13 +193,13 @@ class PopularCourseCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 16.0),
+             SizedBox(height: 4.0), 
               Row(
                 children: [
-                  const Icon(Icons.star, size: 18.0),
-                  const SizedBox(width: 4.0),
+                   Icon(Icons.star, size: 18.0),
+                  SizedBox(width: 4.0),
                   Text(
-                    '$rating ($lessonCount)',
+                    '$rating (5)',
                     style: const TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey,
