@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/lists.dart';
 
-
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -20,17 +19,14 @@ class _HomepageState extends State<Homepage> {
 
     // Implement navigation logic based on the selected index
     switch (index) {
-      case 0: // Home
-        // No navigation needed as it's the current page
+      case 1:
+        // Navigate to CategoryView
         break;
-      case 1: // Category
-        // Implement navigation to CategoryView
+      case 2:
+        // Navigate to MyAppointmentsApp
         break;
-      case 2: // MyAppointmentsApp
-        // Implement navigation to MyAppointmentsApp
-        break;
-      case 3: // SettingsView
-        // Implement navigation to SettingsView
+      case 3:
+        // Navigate to SettingsView
         break;
       default:
         break;
@@ -76,6 +72,50 @@ class _HomepageState extends State<Homepage> {
         child: Column(
           children: [
             SizedBox(height: 30),
+            Container(
+              height: 100,
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.green[100],
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Mathematics Course",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.check_circle, color: Colors.green),
+                          const SizedBox(width: 8.0),
+                          const Text("Completed", style: TextStyle(fontSize: 14.0)),
+                          const SizedBox(width: 16.0),
+                          const Icon(Icons.timer, color: Colors.green),
+                          const SizedBox(width: 8.0),
+                          const Text("Hours Spent", style: TextStyle(fontSize: 14.0)),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  const Text(
+                    "19 Nov, 2023",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30),
             SizedBox(
               height: 300,
               child: ListView.builder(
@@ -94,7 +134,6 @@ class _HomepageState extends State<Homepage> {
                         iconPath: iconlist[index],
                         participantCount: 20,
                         rating: 4.8,
-       
                       ),
                     ),
                   );
@@ -131,21 +170,19 @@ class PopularCourseCard extends StatelessWidget {
   final int participantCount;
   final double rating;
 
-
   const PopularCourseCard({
     Key? key,
     required this.title,
     required this.iconPath,
     required this.participantCount,
     required this.rating,
-
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      width: 200, // Set a fixed width for consistency
+      width: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -163,8 +200,8 @@ class PopularCourseCard extends StatelessWidget {
         children: [
           CachedNetworkImage(
             imageUrl: iconPath,
-            width: 100, // Adjust width as needed
-            height: 100, // Adjust height as needed
+            width: 100,
+            height: 100,
             placeholder: (context, url) => CircularProgressIndicator(),
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
@@ -182,10 +219,10 @@ class PopularCourseCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                 Icon(Icons.people, size: 18.0),
-             SizedBox(width: 4.0),
+                  Icon(Icons.people, size: 18.0),
+                  SizedBox(width: 4.0),
                   Text(
-                    '$participantCount Participant',
+                    '$participantCount Participant${participantCount > 1 ? 's' : ''}',
                     style: const TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey,
@@ -193,10 +230,10 @@ class PopularCourseCard extends StatelessWidget {
                   ),
                 ],
               ),
-             SizedBox(height: 4.0), 
+              SizedBox(height: 4.0),
               Row(
                 children: [
-                   Icon(Icons.star, size: 18.0),
+                  Icon(Icons.star, size: 18.0),
                   SizedBox(width: 4.0),
                   Text(
                     '$rating (5)',
